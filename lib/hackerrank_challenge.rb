@@ -1,0 +1,3 @@
+class Hackerrank_Challenge
+
+end
