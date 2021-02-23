@@ -6,11 +6,32 @@ RSpec.describe Hackerrank_Challenge do
     end
 
     describe 'topArticles' do
-        xit 'should return top N articles by a user' do
+        it 'should return top 1 articles by a user given only 1 page' do
             stub_request(:get, /jsonmock/)
                 .to_return(status: 200, body: File.read('./spec/mockJson/mockResponse_1page.json'))
 
-            expect(subject.topArticles('olalonde', 1)).to eq("Show HN: This up votes itself")
+            expect(subject.topArticles('olalonde', 1)).to eq(["Show HN: This up votes itself"])
+        end
+
+        it 'should return top 2 articles by a user given only 1 page' do
+            stub_request(:get, /jsonmock/)
+                .to_return(status: 200, body: File.read('./spec/mockJson/mockResponse_1page.json'))
+
+            expect(subject.topArticles('olalonde', 2)).to eq(["Show HN: This up votes itself", "Guacamole – A clientless remote desktop gateway"])
+        end
+
+        it 'should return top articles by a user given multiple pages' do
+            stub_request(:get, /jsonmock/)
+                .to_return(status: 200, body: File.read('./spec/mockJson/mockResponse_2page.json'))
+
+            expected = [
+                "Show HN: This up votes itself",
+                "Show HN: This up votes itself",
+                "Guacamole – A clientless remote desktop gateway",
+                "Guacamole – A clientless remote desktop gateway",
+            ]
+
+            expect(subject.topArticles('olalonde', 4)).to eq(expected)
         end
     end
 

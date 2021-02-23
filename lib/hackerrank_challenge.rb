@@ -8,8 +8,6 @@ class Hackerrank_Challenge
 
         article_titles = mapTitlesOrStoryTitles(sorted_articles)
 
-        require 'pry'; binding.pry
-
         article_titles.take(limit)
     end
 
