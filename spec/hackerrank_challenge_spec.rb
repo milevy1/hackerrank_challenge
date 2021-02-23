@@ -22,5 +22,17 @@ RSpec.describe Hackerrank_Challenge do
             expect(actual[1]['title']).to be_nil
             expect(actual[1]['story_title']).to eq("Guacamole – A clientless remote desktop gateway")
         end
+
+        it 'should return all articles for a given user with multiple pages' do
+            stub_request(:get, /jsonmock/)
+                .to_return(
+                    {status: 200, body: File.read('./spec/mockJson/mockResponse_1page.json')},
+                    {status: 200, body: File.read('./spec/mockJson/mockResponse_2page.json')},
+                )
+
+             actual = subject.getAllArticles('olalonde')
+
+             expect(actual.length).to eq(4)
+        end
     end
 end
