@@ -14,9 +14,13 @@ RSpec.describe Hackerrank_Challenge do
     describe 'getAllArticles' do
         it 'should return all articles for a given user if only 1 page' do
              stub_request(:get, /jsonmock/)
-                .to_return(status: 200, body: File.read('mockResponse_1page.json'))
+                .to_return(status: 200, body: File.read('./spec/mockJson/mockResponse_1page.json'))
 
-            expect(subject.getAllArticles('olalonde')).to eq(["Show HN: This up votes itself"])
+            actual = subject.getAllArticles('olalonde')
+
+            expect(actual[0]['title']).to eq("Show HN: This up votes itself")
+            expect(actual[1]['title']).to be_nil
+            expect(actual[1]['story_title']).to eq("Guacamole – A clientless remote desktop gateway")
         end
     end
 end
