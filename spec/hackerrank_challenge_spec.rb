@@ -7,7 +7,10 @@ RSpec.describe Hackerrank_Challenge do
 
     describe 'topArticles' do
         xit 'should return top N articles by a user' do
-            expect(subject.topArticles('olalonde', 1)).to eq(10)
+            stub_request(:get, /jsonmock/)
+                .to_return(status: 200, body: File.read('./spec/mockJson/mockResponse_1page.json'))
+
+            expect(subject.topArticles('olalonde', 1)).to eq("Show HN: This up votes itself")
         end
     end
 
@@ -35,9 +38,9 @@ RSpec.describe Hackerrank_Challenge do
 
     describe 'sortArticles' do
         it 'should sort a list of articles by the number of comments' do
-            article_1 = { title: "Article 1", num_comments: 1}
-            article_2 = { title: "Article 2", num_comments: 2}
-            article_3 = { title: "Article 3", num_comments: 3}
+            article_1 = { "title" => "Article 1", "num_comments" => 1}
+            article_2 = { "title" => "Article 2", "num_comments" => 2}
+            article_3 = { "title" => "Article 3", "num_comments" => 3}
             articles = [article_1, article_3, article_2]
 
             actual = subject.sortArticles(articles)
@@ -46,13 +49,26 @@ RSpec.describe Hackerrank_Challenge do
             expect(actual[1]).to eq(article_2)
             expect(actual[2]).to eq(article_1)
         end
+
+        it 'should treat nil as 0' do
+            article_1 = { "title" => "Article 1", "num_comments" => 1}
+            article_2 = { "title" => "Article 2", "num_comments" => 2}
+            article_3 = { "title" => "Article 3"}
+            articles = [article_1, article_3, article_2]
+
+            actual = subject.sortArticles(articles)
+
+            expect(actual[0]).to eq(article_2)
+            expect(actual[1]).to eq(article_1)
+            expect(actual[2]).to eq(article_3)
+        end
     end
 
     describe 'mapTitlesOrStoryTitles' do
         it 'should return a list of titles' do
-            article_1 = { title: "Article 1", num_comments: 1}
-            article_2 = { title: "Article 2", num_comments: 2}
-            article_3 = { title: "Article 3", num_comments: 3}
+            article_1 = { "title" => "Article 1", "num_comments" => 1}
+            article_2 = { "title" => "Article 2", "num_comments" => 2}
+            article_3 = { "title" => "Article 3", "num_comments" => 3}
             articles = [article_1, article_2, article_3]
 
             expect(subject.mapTitlesOrStoryTitles(articles)).to eq([
@@ -61,9 +77,9 @@ RSpec.describe Hackerrank_Challenge do
         end
 
         it 'should return story_title if title is null' do
-            article_1 = { title: "Article 1", num_comments: 1}
-            article_2 = { title: "Article 2", num_comments: 2}
-            article_3 = { story_title: "Story Title 3", num_comments: 3}
+            article_1 = { "title" => "Article 1", "num_comments" => 1}
+            article_2 = { "title" => "Article 2", "num_comments" => 2}
+            article_3 = { "story_title" => "Story Title 3", "num_comments" => 3}
             articles = [article_1, article_2, article_3]
 
             expect(subject.mapTitlesOrStoryTitles(articles)).to eq([

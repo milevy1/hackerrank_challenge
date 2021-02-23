@@ -2,13 +2,15 @@ require 'Faraday'
 
 class Hackerrank_Challenge
     def topArticles(username, limit)
-        # DONE...Get all pages of articles for the user
+        all_articles = getAllArticles(username)
 
-        # DONE...Sort by num_comments
+        sorted_articles = sortArticles(all_articles)
 
-        # DONE...Map a list of the title names (story_title if null)
+        article_titles = mapTitlesOrStoryTitles(sorted_articles)
 
-        # Limit above list to the input limit
+        require 'pry'; binding.pry
+
+        article_titles.take(limit)
     end
 
     def getAllArticles(username)
@@ -36,13 +38,13 @@ class Hackerrank_Challenge
 
     def sortArticles(articles)
         articles.sort_by do |article|
-            article[:num_comments]
+            article['num_comments'] || 0
         end.reverse
     end
 
     def mapTitlesOrStoryTitles(articles)
         articles.map do |article|
-            article[:title] || article[:story_title]
+            article['title'] || article['story_title']
         end
     end
 end
