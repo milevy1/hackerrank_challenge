@@ -32,4 +32,19 @@ RSpec.describe Hackerrank_Challenge do
              expect(actual.length).to eq(4)
         end
     end
+
+    describe 'sortArticles' do
+        it 'should sort a list of articles by the number of comments' do
+            article_1 = { title: "Article 1", num_comments: 1}
+            article_2 = { title: "Article 2", num_comments: 2}
+            article_3 = { title: "Article 3", num_comments: 3}
+            articles = [article_1, article_3, article_2]
+
+            actual = subject.sortArticles(articles)
+
+            expect(actual[0]).to eq(article_3)
+            expect(actual[1]).to eq(article_2)
+            expect(actual[2]).to eq(article_1)
+        end
+    end
 end

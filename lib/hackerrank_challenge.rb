@@ -2,7 +2,7 @@ require 'Faraday'
 
 class Hackerrank_Challenge
     def topArticles(username, limit)
-        # Get all pages of articles for the user
+        # DONE...Get all pages of articles for the user
 
         # Sort by num_comments
 
@@ -32,5 +32,11 @@ class Hackerrank_Challenge
         end
 
         result
+    end
+
+    def sortArticles(articles)
+        articles.sort_by do |article|
+            article[:num_comments]
+        end.reverse
     end
 end
