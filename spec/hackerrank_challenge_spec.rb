@@ -25,10 +25,7 @@ RSpec.describe Hackerrank_Challenge do
 
         it 'should return all articles for a given user with multiple pages' do
             stub_request(:get, /jsonmock/)
-                .to_return(
-                    {status: 200, body: File.read('./spec/mockJson/mockResponse_1page.json')},
-                    {status: 200, body: File.read('./spec/mockJson/mockResponse_2page.json')},
-                )
+                .to_return(status: 200, body: File.read('./spec/mockJson/mockResponse_2page.json'))
 
              actual = subject.getAllArticles('olalonde')
 

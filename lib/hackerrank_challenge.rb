@@ -13,13 +13,24 @@ class Hackerrank_Challenge
 
     def getAllArticles(username)
         service = Faraday.new('https://jsonmock.hackerrank.com/api/football_matches')
-        response = service.get do |req|
-            req.params['author'] = username
-            req.params['page'] = 1
+        current_page = 1
+        total_pages = 2
+        result = []
+
+        until current_page > total_pages do
+            response = service.get do |req|
+                req.params['author'] = username
+                req.params['page'] = current_page
+            end
+
+            parsed_response = JSON.parse(response.body)
+
+            result += parsed_response['data']
+
+            current_page += 1
+            total_pages = parsed_response['total_pages']
         end
 
-        parsed_response = JSON.parse(response.body)
-
-        parsed_response['data']
+        result
     end
 end
