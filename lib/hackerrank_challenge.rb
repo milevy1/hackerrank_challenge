@@ -4,9 +4,9 @@ class Hackerrank_Challenge
     def topArticles(username, limit)
         # DONE...Get all pages of articles for the user
 
-        # Sort by num_comments
+        # DONE...Sort by num_comments
 
-        # Map a list of the title names (story_title if null)
+        # DONE...Map a list of the title names (story_title if null)
 
         # Limit above list to the input limit
     end
@@ -38,5 +38,11 @@ class Hackerrank_Challenge
         articles.sort_by do |article|
             article[:num_comments]
         end.reverse
+    end
+
+    def mapTitlesOrStoryTitles(articles)
+        articles.map do |article|
+            article[:title] || article[:story_title]
+        end
     end
 end

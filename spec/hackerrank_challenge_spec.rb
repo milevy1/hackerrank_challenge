@@ -47,4 +47,28 @@ RSpec.describe Hackerrank_Challenge do
             expect(actual[2]).to eq(article_1)
         end
     end
+
+    describe 'mapTitlesOrStoryTitles' do
+        it 'should return a list of titles' do
+            article_1 = { title: "Article 1", num_comments: 1}
+            article_2 = { title: "Article 2", num_comments: 2}
+            article_3 = { title: "Article 3", num_comments: 3}
+            articles = [article_1, article_2, article_3]
+
+            expect(subject.mapTitlesOrStoryTitles(articles)).to eq([
+                "Article 1", "Article 2", "Article 3"
+            ])
+        end
+
+        it 'should return story_title if title is null' do
+            article_1 = { title: "Article 1", num_comments: 1}
+            article_2 = { title: "Article 2", num_comments: 2}
+            article_3 = { story_title: "Story Title 3", num_comments: 3}
+            articles = [article_1, article_2, article_3]
+
+            expect(subject.mapTitlesOrStoryTitles(articles)).to eq([
+                "Article 1", "Article 2", "Story Title 3"
+            ])
+        end
+    end
 end
